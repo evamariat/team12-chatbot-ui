@@ -1,7 +1,8 @@
 export const userEndpoints = {
-  getUsers: "/api/users",
-  getUserById: (id: number) => `/api/users/${id}`,
+    getUsers: "/api/users",
+    getUserById: (id: number) => `/api/users/${id}`,
 };
+
 
 export const conversationEndpoints = {
   getAllConversations: "/api/v1/conversations?userId=1", // TODO: PersonId not hard-coded

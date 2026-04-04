@@ -1,7 +1,6 @@
 import { apiClient } from "@/shared/ui/services/apiClient";
-import { userEndpoints, conversationEndpoints, messageEndpoints } from "./endpoints";
+import { userEndpoints, conversationEndpoints } from "./endpoints";
 import type { Conversation } from "@/app/models/Conversation";
-import type { Message } from "@/app/models/Message";
 
 export type User = {
   id: number;
@@ -22,6 +21,13 @@ export async function getAllConversations(): Promise<Conversation[]> {
   return response.data;
 }
 
+export async function getActiveConversations(): Promise<Conversation[]> {
+  const response = await apiClient.get<Conversation[]>(
+    conversationEndpoints.getAllActiveConversations
+  );
+  return response.data;
+}
+
 export async function postConversation(title: string): Promise<Conversation> {
   const response = await apiClient.post<Conversation>(
     conversationEndpoints.postConversation, {
@@ -31,18 +37,6 @@ export async function postConversation(title: string): Promise<Conversation> {
   return response.data;
 }
 
-export async function getMessagesByConversationId(conversationId: number): Promise<any> {  // TODO: Message model
-  const response = await apiClient.get<any[]>( // TODO: Message model
-    messageEndpoints.getMessagesByConversationId(conversationId)
-  );
-  return response.data;
-}
-
-export async function postMessage(conversationId: number, role: string, content: string): Promise<any> { // TODO: Message model
-  const response = await apiClient.post<any>( // TODO: Message model
-    messageEndpoints.postMessage, {
-      conversationId, role, content
-    }
-  );
-  return response.data;
+export async function deleteConversation(id: number): Promise<void> {
+  await apiClient.delete(conversationEndpoints.getConversationById(id));
 }
