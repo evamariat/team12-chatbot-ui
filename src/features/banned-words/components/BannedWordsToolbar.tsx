@@ -1,5 +1,5 @@
-// @ts-ignore
 import SearchIcon from "@mui/icons-material/Search";
+import AddIcon from "@mui/icons-material/Add";
 import {
     Box,
     Button,
@@ -10,7 +10,6 @@ import {
     Select,
     TextField,
 } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
 
 export type StatusFilter = "all" | "active" | "inactive";
 
@@ -43,17 +42,25 @@ export default function BannedWordsToolbar({
                 placeholder="Otsi sõna või kategooriat..."
                 value={searchValue}
                 onChange={(event) => onSearchChange(event.target.value)}
-                sx={{ backgroundColor: "#ffffff" }}
+                sx={{
+                    flexGrow: 1,
+                    bgcolor: "background.paper",
+                }}
                 InputProps={{
                     startAdornment: (
                         <InputAdornment position="start">
-                            <SearchIcon sx={{ color: "#6b7280" }} />
+                            <SearchIcon sx={{ color: "text.secondary" }} />
                         </InputAdornment>
                     ),
                 }}
             />
 
-            <FormControl sx={{ minWidth: 220, backgroundColor: "#ffffff" }}>
+            <FormControl
+                sx={{
+                    minWidth: 220,
+                    bgcolor: "background.paper",
+                }}
+            >
                 <InputLabel id="banned-words-status-filter-label">Filter</InputLabel>
                 <Select
                     labelId="banned-words-status-filter-label"
@@ -74,11 +81,12 @@ export default function BannedWordsToolbar({
                 startIcon={<AddIcon />}
                 onClick={onAddClick}
                 sx={{
+                    minWidth: 150,
+                    px: 3,
                     whiteSpace: "nowrap",
-                    backgroundColor: "#1976d2",
+                    textTransform: "none",
                     boxShadow: "none",
                     "&:hover": {
-                        backgroundColor: "#1565c0",
                         boxShadow: "none",
                     },
                 }}

@@ -50,7 +50,9 @@ export default function BannedWordsTable({
         return rows.map((row) => (
             <TableRow key={row.id} hover>
                 <TableCell>
-                    <Typography fontWeight={600}>{row.word}</Typography>
+                    <Typography fontWeight={600} color="text.primary">
+                        {row.word}
+                    </Typography>
                 </TableCell>
 
                 <TableCell>{row.category || "-"}</TableCell>
@@ -90,16 +92,36 @@ export default function BannedWordsTable({
     };
 
     return (
-        <Paper elevation={0} sx={{ border: "1px solid #dfe3e8" }}>
+        <Paper
+            elevation={0}
+            sx={{
+                border: 1,
+                borderColor: "divider",
+                bgcolor: "background.paper",
+            }}
+        >
             <Box sx={{ overflowX: "auto" }}>
                 <Table>
                     <TableHead>
-                        <TableRow sx={{ backgroundColor: "#f8fafc" }}>
-                            <TableCell>Sõna</TableCell>
-                            <TableCell>Kategooria</TableCell>
-                            <TableCell>Raskusaste</TableCell>
-                            <TableCell>Staatus</TableCell>
-                            <TableCell align="right">Tegevused</TableCell>
+                        <TableRow sx={{ bgcolor: "action.hover" }}>
+                            <TableCell sx={{ color: "text.secondary", fontWeight: 600 }}>
+                                Sõna
+                            </TableCell>
+                            <TableCell sx={{ color: "text.secondary", fontWeight: 600 }}>
+                                Kategooria
+                            </TableCell>
+                            <TableCell sx={{ color: "text.secondary", fontWeight: 600 }}>
+                                Raskusaste
+                            </TableCell>
+                            <TableCell sx={{ color: "text.secondary", fontWeight: 600 }}>
+                                Staatus
+                            </TableCell>
+                            <TableCell
+                                align="right"
+                                sx={{ color: "text.secondary", fontWeight: 600 }}
+                            >
+                                Tegevused
+                            </TableCell>
                         </TableRow>
                     </TableHead>
 

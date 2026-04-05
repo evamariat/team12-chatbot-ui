@@ -12,6 +12,7 @@ import {
     Select,
     Stack,
     TextField,
+    Typography,
 } from "@mui/material";
 import { severityOptions } from "../constants/severityOptions";
 import { categoryOptions } from "../constants/categoryOptions";
@@ -123,15 +124,35 @@ export default function BannedWordDialog({
     };
 
     return (
-        <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
-            <DialogTitle>
-                {mode === "create"
-                    ? "Lisa uus keelatud sõna"
-                    : "Muuda keelatud sõna"}
+        <Dialog
+            open={open}
+            onClose={onClose}
+            fullWidth
+            maxWidth="sm"
+            PaperProps={{
+                sx: {
+                    borderRadius: 2,
+                    overflow: "hidden",
+                },
+            }}
+        >
+            <DialogTitle
+                sx={(theme) => ({
+                    bgcolor: theme.palette.primary.main,
+                    color: theme.palette.common.white,
+                    py: 2,
+                    px: 3,
+                })}
+            >
+                <Typography variant="h6" fontWeight={600}>
+                    {mode === "create"
+                        ? "Lisa uus keelatud sõna"
+                        : "Muuda keelatud sõna"}
+                </Typography>
             </DialogTitle>
 
-            <DialogContent sx={{ pt: 2 }}>
-                <Stack spacing={2} sx={{ mt: 1 }}>
+            <DialogContent sx={{ pt: 4, pb: 2 }}>
+                <Stack spacing={2} sx={{ mt: 2 }}>
                     <TextField
                         label="Sõna"
                         value={word}
@@ -193,7 +214,7 @@ export default function BannedWordDialog({
                 </Stack>
             </DialogContent>
 
-            <DialogActions sx={{ px: 3, pb: 2 }}>
+            <DialogActions sx={{ px: 3, pt: 2, pb: 3 }}>
                 <Button onClick={onClose}>Tühista</Button>
                 <Button variant="contained" onClick={() => void handleSubmit()}>
                     Salvesta

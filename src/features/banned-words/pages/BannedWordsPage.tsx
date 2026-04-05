@@ -23,7 +23,7 @@ export default function BannedWordsPage() {
     const [errorMessage, setErrorMessage] = useState("");
 
     const [searchValue, setSearchValue] = useState("");
-    const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
+    const [statusFilter, setStatusFilter] = useState<StatusFilter>("active");
 
     const [dialogOpen, setDialogOpen] = useState(false);
     const [dialogMode, setDialogMode] = useState<"create" | "edit">("create");
@@ -133,12 +133,20 @@ export default function BannedWordsPage() {
     };
 
     return (
-        <Box sx={{ backgroundColor: "#f5f7fa", minHeight: "100vh", p: 3 }}>
-            <Paper elevation={0} sx={{ overflow: "hidden", border: "1px solid #dfe3e8" }}>
+        <Box>
+            <Paper
+                elevation={0}
+                sx={{
+                    overflow: "hidden",
+                    border: 1,
+                    borderColor: "divider",
+                    bgcolor: "background.paper",
+                }}
+            >
                 <Box
                     sx={{
-                        backgroundColor: "#1976d2",
-                        color: "#ffffff",
+                        bgcolor: "primary.main",
+                        color: "common.white",
                         px: 3,
                         py: 2.5,
                     }}
@@ -151,7 +159,7 @@ export default function BannedWordsPage() {
                     </Typography>
                 </Box>
 
-                <Box sx={{ p: 3, backgroundColor: "#f5f7fa" }}>
+                <Box sx={{ p: 3, bgcolor: "background.default" }}>
                     {errorMessage && (
                         <Alert severity="error" sx={{ mb: 2 }}>
                             {errorMessage}
