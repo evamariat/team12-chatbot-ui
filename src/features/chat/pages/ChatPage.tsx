@@ -17,5 +17,10 @@ export default function ChatPage() {
     loadUsers();
   }, []);
 
-  return <div>ChatPage - to be implemented. Connection to db: {status}</div>;
+  return    <div>
+    <div>
+      <FileUploadDropzone />
+    </div>
+ <div>ChatPage - to be implemented. Connection to db: {status}</div>;
+ </div>;
 }
