@@ -3,6 +3,8 @@ import { styled } from "@mui/material/styles";
 export const ChatLayoutRoot = styled("div")({
     display: "flex",
     height: "100svh",
+    background: "var(--bg)",
+    color: "var(--text)",
 });
 
 export const ChatAreaRoot = styled("div")({
