@@ -1,61 +1,59 @@
-import React, { useCallback, useState } from 'react';
-import { useDropzone, FileRejection } from 'react-dropzone';
+import React, { useState } from "react";
+import { Box, Typography, LinearProgress } from "@mui/material";
+import { DropzoneArea } from "react-mui-dropzone";
 
-interface DropZoneProps {
-  onFilesSelect?: (files: File[]) => void;
-  maxFiles?: number;
-  maxSize?: number;
-}
+import { apiClient } from "@/shared/services/apiClient";
 
-const DropZone: React.FC<DropZoneProps> = ({
-  onFilesSelect,
-  maxFiles = 5,
-  maxSize = 5242880, // 5MB
-}) => {
-  const [files, setFiles] = useState<File[]>([]);
-  const [error, setError] = useState<string | null>(null);
+export function DropZone() {
+  const [progress, setProgress] = useState<number | null>(null);
 
-  const onDropAccepted = useCallback((acceptedFiles: File[]) => {
-    setFiles(acceptedFiles);
-    setError(null);
-    onFilesSelect?.(acceptedFiles);
-  }, [onFilesSelect]);
+  const handleUpload = async (files: File[]) => {
+    if (!files[0]) return;
 
-  const onDropRejected = useCallback((rejections: FileRejection[]) => {
-    const errs = rejections.map(r => `${r.file.name}: ${r.errors[0].message}`);
-    setError(errs.join('\n'));
-  }, []);
+    const formData = new FormData();
+    formData.append("file", files[0]);
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDropAccepted,
-    onDropRejected,
-    maxFiles,
-    maxSize,
-    accept: {
-      'image/*': ['.jpeg', '.jpg', '.png', '.gif'],
-      'application/pdf': ['.pdf'],
-    },
-  });
+    try {
+      setProgress(0);
+      const onUploadProgress = (e: ProgressEvent) => {
+        const percent = (e.loaded / e.total) * 100;
+        setProgress(percent);
+      };
+
+      const response = await apiClient.post("/api/files", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+        onUploadProgress,
+      });
+
+      console.log("Uploaded file ID:", response.data.id);
+    } catch (err) {
+      console.error("Upload failed:", err);
+    } finally {
+      setProgress(null);
+    }
+  };
 
   return (
-    <div className="upload-container">
-      <div {...getRootProps()} className={`dropzone ${isDragActive ? 'active' : ''}`}>
-        <input {...getInputProps()} />
-        {isDragActive ? <p>Drop files here...</p> : <p>Drag & drop or click to select files</p>}
-      </div>
-      {error && <div className="error">{error}</div>}
-      {files.length > 0 && (
-        <div className="file-list">
-          <h4>Selected ({files.length}/{maxFiles}):</h4>
-          <ul>
-            {files.map(file => (
-              <li key={file.name}>{file.name} - {(file.size / 1024).toFixed(2)} KB</li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </div>
-  );
-};
+    <Box sx={{ mt: 2, mb: 2 }}>
+      <Typography variant="body2" sx={{ mb: 1 }}>
+        Upload a file
+      </Typography>
 
-export default DropZone;
+      <DropzoneArea
+        onChange={handleUpload}
+        maxFileSize={5 * 1024 * 1024} // 5 MB
+        acceptedFiles={["image/*", "application/*", "text/*"]}
+        showFileNames
+        showFileNamesInPreview
+      />
+
+      {progress !== null && (
+        <Box sx={{ mt: 1 }}>
+          <LinearProgress variant="determinate" value={progress} />
+        </Box>
+      )}
+    </Box>
+  );
+}
