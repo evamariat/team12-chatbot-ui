@@ -6,6 +6,7 @@ import {
 import { ChatPage } from "../features/chat/pages/ChatPage";
 import AdminLayout from "../features/admin/layout/AdminLayout";
 import StampAnswersPage from "../features/admin/pages/StampAnswersPage";
+import BannedWordsPage from "@/features/banned-words/pages/BannedWordsPage";
 
 const router = createBrowserRouter([
   {
@@ -30,7 +31,7 @@ const router = createBrowserRouter([
       },
       {
         path: "banned-words",
-        element: <div>Keelatud sõnad - Tuleb varsti</div>,
+        element: <BannedWordsPage />,
       },
       {
         path: "documents",
