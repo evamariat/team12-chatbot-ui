@@ -1,3 +1,5 @@
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { ChatPage } from "../features/chat/pages/ChatPage";
 import {
   createBrowserRouter,
   RouterProvider,
